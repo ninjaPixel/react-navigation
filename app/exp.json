@@ -1,15 +1,15 @@
 {
-  "name": "app",
-  "description": "An empty new project",
+  "name": "React Navigation Demo",
+  "description": "Play with the navigator stack and tabs",
   "slug": "app",
   "privacy": "public",
   "sdkVersion": "15.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
-  "icon": "./assets/icons/app.png",
+  "icon": "./assets/icons/blueprint.png",
   "loading": {
-    "icon": "./assets/icons/loading.png",
+    "icon": "./assets/icons/lamp.png",
     "hideExponentText": false
   },
   "packagerOpts": {
