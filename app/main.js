@@ -11,6 +11,7 @@ class HomeScreen extends React.Component {
     
     static navigationOptions = {
         title: 'React Navigator Demo',
+        visible: false
     };
     
     
@@ -119,9 +120,16 @@ class CityInfoScreen extends React.Component {
 class CityMapScreen extends React.Component {
     render() {
         return (
-          <View>
-              <Text style={styles.text}>Mappy McMap Face</Text>
-          </View>
+          <Expo.MapView
+            style={{flex: 1}}
+            initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            }}
+          />
+        
         );
     }
 }
