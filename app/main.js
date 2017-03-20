@@ -1,8 +1,12 @@
 import Expo from 'expo';
 import React from 'react';
-import {StyleSheet, Text, View, Button, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, Button, ScrollView, Platform} from 'react-native';
 import {StackNavigator, TabNavigator} from 'react-navigation';
-
+import styles from './styles/styles';
+import CountryScreen from './screens/CountryScreen';
+import CityInfoScreen from './screens/CityInfoScreen';
+import CityMapScreen from './screens/CityMapScreen';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class HomeScreen extends React.Component {
     constructor(props) {
@@ -10,8 +14,11 @@ class HomeScreen extends React.Component {
     }
     
     static navigationOptions = {
-        title: 'React Navigator Demo',
-        visible: false
+        // title: 'React Navigator',
+        header: {
+            visible: false,
+            
+        }
     };
     
     
@@ -34,13 +41,13 @@ class HomeScreen extends React.Component {
                 cities: [{city: 'Paris'}, {city: 'Nantes'}, {city: 'Cannes'}, {city: 'Bordeaux'}]
             },
         ];
-        const {navigate} = this.props.navigation;
+        // const {navigate} = this.props.navigation;
         
         
         return countriesAndCities.map((d, i)=> {
             return (
               <View style={styles.button} key={i}>
-                  <Button onPress={() => navigate('Country', {country: d.country, cities: d.cities})}
+                  <Button onPress={() => this.props.navigation.navigate('Country', {country: d.country, cities: d.cities})}
                           title={d.country}
                   /></View>
             );
@@ -59,125 +66,44 @@ class HomeScreen extends React.Component {
 }
 
 
-class CountryScreen extends React.Component {
-    static navigationOptions = {
-        title: ({state}) => state.params.country
-    };
-    
-    renderCities() {
-        const {navigate} = this.props.navigation;
-        return this.props.navigation.state.params.cities.map((d, i)=> {
-            return (
-              <View style={styles.button} key={i}>
-                  <Button onPress={() => navigate('City', {city: d.city})}
-                          title={d.city}
-                  /></View>
-            );
-        });
-    }
-    
-    render() {
-        return (
-          <View>
-              <Text style={styles.text}>Items (routes) are added to the Navigation stack</Text>
-              {this.renderCities()}
-          </View>
-        );
-    }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    statusBarUnderlay: {
-        height: 24,
-        backgroundColor: 'rgba(0,0,0,0.2)',
-    },
-    text: {
-        padding: 10,
-    },
-    button: {
-        padding: 10,
-    }
-});
-
-const lorem = "Marfa bushwick distillery venmo readymade, seitan taxidermy single-origin coffee. Fashion axe iPhone pug, edison bulb pinterest bicycle rights intelligentsia chartreuse cronut try-hard subway tile blog typewriter. Microdosing pitchfork kogi forage, vape fixie green juice austin fam fap cray poutine bespoke art party. Kale chips hella meggings neutra put a bird on it la croix, kombucha try-hard stumptown disrupt pour-over. Fam beard migas, pinterest poke woke intelligentsia franzen 90's raw denim af vaporware vinyl. Woke affogato intelligentsia gochujang, schlitz tumblr authentic artisan echo park kickstarter pour-over food truck retro hashtag. Hammock thundercats four loko messenger bag unicorn keytar, dreamcatcher truffaut poutine lumbersexual flannel heirloom photo booth biodiesel gochujang.";
-
-
-class CityInfoScreen extends React.Component {
-    render() {
-        return (
-          <View>
-              <Text style={styles.text}>You can use tabs, too. Note that these are contained within thier parent
-                                        route.</Text>
-              <Text style={styles.text}>{lorem}</Text>
-          </View>
-        );
-    }
-}
-
-class CityMapScreen extends React.Component {
-    
-    renderMarkers() {
-        const markers = [{
-            latlng: {
-                latitude: 37.78825,
-                longitude: -122.4324
-            },
-            title: 'Title',
-            description: 'Some interesting description'
-        },
-        {
-            latlng: {
-                latitude: 37.78925,
-                longitude: -122.4334
-            },
-            title: 'Title',
-            description: 'Some interesting description'
-        },
-        {
-            latlng: {
-                latitude: 37.78685,
-                longitude: -122.4421
-            },
-            title: 'Title',
-            description: 'Some interesting description'
-        }];
-        return (    markers.map((marker,i) =>
-          <Expo.MapView.Marker
-            key={i}
-            coordinate={marker.latlng}
-            title={marker.title}
-            description={marker.description}
+CityInfoScreen.navigationOptions = {
+    tabBar: {
+        label: 'Info',
+        icon: ({tintColor, focused}) => (
+          <Ionicons
+            name={focused ? 'ios-settings' : 'ios-settings-outline'}
+            size={26}
+            style={{color: tintColor}}
           />
-        ));
-    }
-    
-    render() {
-        return (
-          <Expo.MapView
-            style={{flex: 1}}
-            initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            }}
-          >
-              {this.renderMarkers()}
-          </Expo.MapView>
-        
-        );
-    }
-}
+        ),
+    },
+};
 
+CityMapScreen.navigationOptions = {
+    tabBar: {
+        label: 'Map',
+        icon: ({tintColor, focused}) => (
+          <Ionicons
+            name={focused ? 'ios-map' : 'ios-map-outline'}
+            size={26}
+            style={{color: tintColor}}
+          />
+        ),
+    },
+};
 
 const CityTabNavigator = TabNavigator({
     Info: {screen: CityInfoScreen},
     Map: {screen: CityMapScreen},
+}, {
+    tabBarOptions: {
+        activeTintColor: Platform.OS === 'ios' ? '#e91e63' : '#fff',
+    },
+    backTitle:null,
+    
 });
+
+
 CityTabNavigator.navigationOptions = {
     title: ({state}) => {
         return state.params.city;
@@ -187,6 +113,10 @@ const SimpleApp = StackNavigator({
     Home: {screen: HomeScreen},
     Country: {screen: CountryScreen},
     City: {screen: CityTabNavigator},
+}, {
+    initialRouteName: 'Home',
+    headerMode: 'screen',
+    backTitle:null,
 });
 Expo.registerRootComponent(SimpleApp);
 
