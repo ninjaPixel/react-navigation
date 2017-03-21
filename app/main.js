@@ -1,27 +1,29 @@
 import Expo from 'expo';
 import React from 'react';
-import {StyleSheet, Text, View, Button, ScrollView, Platform} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Platform} from 'react-native';
 import {StackNavigator, TabNavigator} from 'react-navigation';
 import styles from './styles/styles';
 import CountryScreen from './screens/CountryScreen';
 import CityInfoScreen from './screens/CityInfoScreen';
 import CityMapScreen from './screens/CityMapScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Button from 'apsl-react-native-button'
+import Playground from './js/App';
 
 class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
     }
-    
+
     static navigationOptions = {
         // title: 'React Navigator',
         header: {
             visible: false,
-            
+
         }
     };
-    
-    
+
+
     renderCountryButtons() {
         const countriesAndCities = [
             {
@@ -42,18 +44,23 @@ class HomeScreen extends React.Component {
             },
         ];
         // const {navigate} = this.props.navigation;
-        
-        
+
+
         return countriesAndCities.map((d, i)=> {
             return (
-              <View style={styles.button} key={i}>
-                  <Button onPress={() => this.props.navigation.navigate('Country', {country: d.country, cities: d.cities})}
-                          title={d.country}
-                  /></View>
+              <View style={styles.buttonContainer}  key={i}>
+                  <Button style={styles.button} textStyle={styles.buttonText}
+                  onPress={() => this.props.navigation.navigate('Country', {country: d.country, cities: d.cities})}>
+                      {d.country}
+                    </Button>
+                  {/*<Button onPress={() => this.props.navigation.navigate('Country', {country: d.country, cities: d.cities})}*/}
+                  {/*title={d.country}*/}
+                  {/*/>*/}
+              </View>
             );
         });
     }
-    
+
     render() {
         return (
           <ScrollView style={styles.container}>
@@ -100,7 +107,7 @@ const CityTabNavigator = TabNavigator({
         activeTintColor: Platform.OS === 'ios' ? '#e91e63' : '#fff',
     },
     backTitle:null,
-    
+
 });
 
 
@@ -109,6 +116,8 @@ CityTabNavigator.navigationOptions = {
         return state.params.city;
     }
 };
+
+
 const SimpleApp = StackNavigator({
     Home: {screen: HomeScreen},
     Country: {screen: CountryScreen},
@@ -119,4 +128,5 @@ const SimpleApp = StackNavigator({
     backTitle:null,
 });
 Expo.registerRootComponent(SimpleApp);
+// Expo.registerRootComponent(Playground);
 

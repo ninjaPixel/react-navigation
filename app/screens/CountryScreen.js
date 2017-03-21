@@ -1,7 +1,9 @@
 import Expo from 'expo';
 import React from 'react';
-import {StyleSheet, Text, View, Button, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {StackNavigator, TabNavigator} from 'react-navigation';
+import Button from 'apsl-react-native-button'
+
 import styles from '../styles/styles';
 
 
@@ -14,10 +16,11 @@ export default class CountryScreen extends React.Component {
         // const {navigate} = this.props.navigation;
         return this.props.navigation.state.params.cities.map((d, i)=> {
             return (
-              <View style={styles.button} key={i}>
-                  <Button onPress={() => this.props.navigation.navigate('City', {city: d.city})}
-                          title={d.city}
-                  /></View>
+              <View  key={i}>
+                  <Button style={styles.button} textStyle={styles.buttonText}
+                  onPress={() => this.props.navigation.navigate('City', {city: d.city})}
+                  >{d.city}</Button>
+              </View>
             );
         });
     }

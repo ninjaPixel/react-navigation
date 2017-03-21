@@ -15,8 +15,20 @@ const styles = StyleSheet.create({
     text: {
         padding: 10,
     },
+    buttonContainer:{
+      // flexDirection:'row',
+        width:100
+    },
     button: {
-        padding: 10,
+        backgroundColor: 'white',
+        borderColor: '#333',
+        borderWidth: 2,
+        borderRadius: 22,
+    },
+    buttonText: {
+        // width: 100,
+        fontWeight: '500',
+        color: '#333',
     }
 });
 

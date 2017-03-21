@@ -1,10 +1,10 @@
 {
   "name": "React Navigation Demo",
   "description": "Play with the navigator stack and tabs",
-  "slug": "app",
+  "slug": "react-navigation",
   "privacy": "public",
   "sdkVersion": "15.0.0",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./assets/icons/blueprint.png",

@@ -41,16 +41,22 @@ export default class CityMapScreen extends React.Component {
         ));
     }
     
+    initialRegion() {
+        return {
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+            
+        };
+    }
+    
     render() {
+        // return null;
         return (
           <Expo.MapView
             style={{flex: 1}}
-            initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            }}
+            initialRegion={this.initialRegion()}
           >
               {this.renderMarkers()}
           </Expo.MapView>
